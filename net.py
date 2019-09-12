@@ -26,19 +26,19 @@ train_data_path = 'data/train'
 validation_data_path = 'data/test'
 
 """
-Parameters
+Параметры
 """
-img_width, img_height = 150, 150
-batch_size = 32
-samples_per_epoch = 53
-validation_steps = 19
-nb_filters1 = 32
-nb_filters2 = 64
-conv1_size = 3
-conv2_size = 2
-pool_size = 2
-classes_num = 3
-lr = 0.0003
+img_width, img_height = 150, 150  # Разрешение картинки
+batch_size = 32 
+samples_per_epoch = 53  # Кол-во изображений тренирующей выборки
+validation_steps = 19  # Кол-во изоюражений тестовой выборки
+nb_filters1 = 32  # Кол-во нейронов 1 слой
+nb_filters2 = 64  # Кол-во нейронов 2 слой
+conv1_size = 3  # Кол-во нейронов 1 свёрточный
+conv2_size = 2  # Кол-во нейронов 2 свёрточный
+pool_size = 2  # MaxPool размер
+classes_num = 3   # Выходной слой \ Кол-во классов
+lr = 0.0003  # Точность обучения
 
 model = Sequential()
 model.add(Convolution2D(nb_filters1, conv1_size, conv1_size, border_mode="same", input_shape=(img_width, img_height, 3)))
@@ -80,7 +80,7 @@ validation_generator = test_datagen.flow_from_directory(
     class_mode='categorical')
 
 """
-Tensorboard log
+Логи
 """
 log_dir = 'tf-log/'
 tb_cb = callbacks.TensorBoard(log_dir=log_dir, histogram_freq=0)
@@ -100,17 +100,5 @@ if not os.path.exists(target_dir):
 model.save('models/model.h5')
 model.save_weights('models/weights.h5')
 
-#Calculate execution time
-end = time.time()
-dur = end-start
-
-if dur<60:
-    print("Execution Time:",dur,"seconds")
-elif dur>60 and dur<3600:
-    dur=dur/60
-    print("Execution Time:",dur,"minutes")
-else:
-    dur=dur/(60*60)
-    print("Execution Time:",dur,"hours")
 
 print(train_generator.class_indices)

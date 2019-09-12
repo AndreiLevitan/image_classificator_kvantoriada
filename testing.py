@@ -6,20 +6,20 @@ import time
 
 start = time.time()
 
-# Define Path
+# Описание путей
 model_path = 'models/model.h5'
 model_weights_path = 'models/weights.h5'
 test_path = 'data/alien_test'
 
-# Load the pre-trained models
+# Загрузка моделей
 model = load_model(model_path)
 model.load_weights(model_weights_path)
 
-# Define image parameters
+# Описание разрешения изображения
 img_width, img_height = 150, 150
 
 
-# Prediction Function
+# Функция предсказания
 def predict(file):
     x = load_img(file, target_size=(img_width, img_height))
     x = img_to_array(x)
@@ -38,7 +38,7 @@ def predict(file):
     return answer
 
 
-# Walk the directory for every image
+# Проход по изображениям из test_path
 for _, ret in enumerate(os.walk(test_path)):
     for i, filename in enumerate(ret[2]):
         if filename.startswith("."):
@@ -47,16 +47,3 @@ for _, ret in enumerate(os.walk(test_path)):
         print(ret[0] + '/' + filename)
         result = predict(ret[0] + '/' + filename)
         print(" ")
-
-# Calculate execution time
-end = time.time()
-dur = end - start
-
-if dur < 60:
-    print("Execution Time:", dur, "seconds")
-elif dur > 60 and dur < 3600:
-    dur = dur / 60
-    print("Execution Time:", dur, "minutes")
-else:
-    dur = dur / (60 * 60)
-    print("Execution Time:", dur, "hours")

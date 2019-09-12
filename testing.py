@@ -4,7 +4,6 @@ from keras.preprocessing.image import ImageDataGenerator, load_img, img_to_array
 from keras.models import Sequential, load_model
 import time
 
-start = time.time()
 
 # Описание путей
 model_path = 'models/model.h5'
